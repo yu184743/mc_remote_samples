@@ -55,8 +55,10 @@ def clear_XYZ_axis(mc, wait=0.5):
 
 
 def reset_minecraft_world(mc, width=48):
-    mc.setBlocks(-width, param.Y_SEA + 1, -width, width, AXIS_TOP, width, block.AIR)
-    sleep(1)
+    mc.setBlocks(-width, param.Y_SEA + 32, -width, width, AXIS_TOP, width, block.AIR)
+    sleep(2)
+    mc.setBlocks(-width, param.Y_SEA + 1, -width, width, param.Y_SEA + 31, width, block.AIR)
+    sleep(3)
     mc.setBlocks(-width, param.Y_SEA, -width, width, param.Y_SEA, width, block.GRASS_BLOCK)
     sleep(1)
 
@@ -77,19 +79,9 @@ if __name__ == "__main__":
 
     mc.postToChat("axis_flat.py")
     # reset_minecraft_world(mc)
-    # reset_minecraft_world(mc, width=100)
     # sleep(20)
-    # reset_minecraft_world(mc, width=200)
-    # draw_XYZ_axis(mc)
     # clear_XYZ_axis(mc, wait=0.05)
     # draw_XYZ_axis(mc, wait=0.02)
 
-    # mc.postToChat("farm and fields")
-    # construction_fields(mc, -1000, 1000)
-    # construction_fields(mc, 0000, 0000)
-    # construction_fields(mc, 1000, 1000)
-
-    # mc.setBlocks(82, 139, -80,    8, 63, -81, block.AIR)
-
     reset_minecraft_world(mc)
-    draw_XYZ_axis(mc, wait=0)
+    draw_XYZ_axis(mc, wait=0.05)
