@@ -65,11 +65,6 @@ python hello.py
 python axis_flat.py
 ```
 
-## Usage
-```bash
-python hello.py
-```
-
 ==================================
 Minecraft Remote / mc-remote is a remote control system for Minecraft. It works with the plugin (McRemote) loaded on the [Minecraft server (PaperMC)](https://papermc.io/) and allows users to code and perform automatic construction.  It is based on `RaspberryJuice` by zhowei and `mcpi` by martinohanlon, and `JuicyraspberryPie` by wensheng, which are strongly intended to support learning (rather than education), and the wisdom and efforts of users of these projects.
 **It is also strongly influenced by Dr. Mitchel Resnick (MIT)'s Lifelong Kindergarten.**
