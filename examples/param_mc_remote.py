@@ -1,9 +1,9 @@
 # Parameters for Minecraft Java Edition
 
 from mc_remote.vec3 import Vec3
-import mc_remote.block_1_21_5 as block
-import mc_remote.entity_1_21_5 as entity
-import mc_remote.particle_1_21_5 as particle
+import mc_remote.block_id as block
+import mc_remote.entity_id as entity
+import mc_remote.particle_id as particle
 
 
 PLAYER_NAME = "PLAYER_NAME"  # set your player name in Minecraft

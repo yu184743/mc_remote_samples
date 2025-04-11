@@ -2,15 +2,18 @@
 
 [[package]]
 name = "minecraft-remote-api"
-version = "1214.10.1"
+version = "1214.10.9"
 description = "Python Client-API for Minecraft Remote or mc-remote"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "minecraft_remote_api-1214.10.1-py3-none-any.whl", hash = "sha256:0f2540dfe623ff7551b287f61cec2659af85bb22832b6fe7b4716931cd7b871e"},
-    {file = "minecraft_remote_api-1214.10.1.tar.gz", hash = "sha256:da01a8030b99897bd07621baa9ff60aaacd245bdc9f55959d895b917571547ec"},
+    {file = "minecraft_remote_api-1214.10.9-py3-none-any.whl", hash = "sha256:b3572bb51bd3f83b94167f4e9f1542faaffd41a69bc93f742ef93bc0d33254e4"},
+    {file = "minecraft_remote_api-1214.10.9.tar.gz", hash = "sha256:512e7a24a6486fee3a5f18a27db579275c853949e65fa16039dd97e9e99f8c1c"},
 ]
+
+[package.dependencies]
+pygame-ce = ">=2.5.3,<3.0.0"
 
 [[package]]
 name = "pygame-ce"
