@@ -17,7 +17,7 @@ AXIS_BLOCK_Z = block.GOLD_BLOCK
 AXIS_BLOCK_TOP = block.GLOWSTONE
 
 
-def draw_XYZ_axis(mc, wait=0.5):
+def draw_XYZ_axis(mc, wait=0.125):
     mc.postToChat("Drawing x-axis from negative to positive region")
     for x in range(-AXIS_WIDTH, AXIS_WIDTH + 1):
         block_type = AXIS_BLOCK_X if x >= 0 else (block.AIR if x % 2 == 0 else AXIS_BLOCK_X)
@@ -37,20 +37,20 @@ def draw_XYZ_axis(mc, wait=0.5):
         sleep(wait)
 
 
-def clear_XYZ_axis(mc, wait=0.5):
+def clear_XYZ_axis(mc, wait=0.125):
     mc.postToChat("Clearing x-axis from negative to positive region")
     for x in range(-AXIS_WIDTH, AXIS_WIDTH + 1):
-        mc.setBlock(x, block.AIR, 0, debug=True)
+        mc.setBlock(x, AXIS_Y_V_ORG, 0, block.AIR)
         sleep(wait)
 
     mc.postToChat("Clearing y-axis from bottom to top")
     for y in range(AXIS_BOTTOM, AXIS_TOP + 1):
-        mc.setBlock(x, block.AIR, 0, debug=True)
+        mc.setBlock(0, y, 0, block.AIR)
         sleep(wait)
 
     mc.postToChat("Clearing z-axis from negative to positive region")
     for z in range(-AXIS_WIDTH, AXIS_WIDTH + 1):
-        mc.setBlock(x, block.AIR, 0, debug=True)
+        mc.setBlock(0, AXIS_Y_V_ORG, z, block.AIR)
         sleep(wait)
 
 
@@ -61,15 +61,6 @@ def reset_minecraft_world(mc, width=48):
     sleep(3)
     mc.setBlocks(-width, param.Y_SEA, -width, width, param.Y_SEA, width, block.GRASS_BLOCK)
     sleep(1)
-
-
-def construction_fields(mc, x=0, z=0):
-    mc.postToChat(f"Construction fields at x={x}, z={z}")
-    for _x in range(-400 + x, 400 + x, 200):
-        for _z in range(-400 + z, 400 + z, 200):
-            mc.setPlayer(param.PLAYER_NAME, _x, 0, _z)
-            reset_minecraft_world(mc)
-            draw_XYZ_axis(mc, wait=0)
 
 
 if __name__ == "__main__":
