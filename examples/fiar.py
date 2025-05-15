@@ -42,7 +42,51 @@ CTRL_KEYS = [[pygame.K_LEFT, "LEFT", -1],
              [pygame.K_0, "WIN", 0]] # デバッグ用
 
 win_flag = False
-win_check = False
+doCheck = True
+
+def win_check() :
+    # 勝利判定文 print()はデバッグ用
+    win_flag = True
+    doCheck = True
+    if stonecount[cursor] > 3: #下
+        for x in range(4):
+            if color[sta + 9*x] != stonecolor:
+                win_flag = False
+        if win_flag:
+            doCheck = False
+    elif cursor < 6 and win_check == False: #右
+        for x in range (4):
+            if color[sta + x] != stonecolor:
+                win_flag = False
+    elif cursor > 2 and win_check == False: # 左
+        for x in range(4):
+            if color[sta - x] != stonecolor:
+                win_flag = False
+    elif stonecount[cursor] < 7 and cursor < 6: #右上
+        print("judge rightup")
+        for x in range(4):
+            if color[sta - 8*x] != stonecolor:
+                win_flag = False
+    elif stonecount[cursor] > 3 and cursor < 6: #右下
+        print("judge rightdown")
+        for x in range(4):
+            if color[sta + 10*x] != stonecolor:
+                win_flag = False
+    elif stonecount[cursor] < 7 and cursor > 2: #左上
+        print("judge leftup")
+        for x in range(4):
+            if color[sta - 10*x] != stonecolor:
+                win_flag = False
+    elif stonecount[cursor] > 3 and cursor > 2: #左下
+        print("judge leftdown")
+        for x in range(4):
+            if color[sta + 8*x] != stonecolor:
+                win_flag = False
+    if whichturn == False:
+        whichturn = True
+    else:
+         whichturn = False
+
 
 while running:
     for event in pygame.event.get():
@@ -71,7 +115,7 @@ while running:
     stonecount = [0]*9
     gamenow = True
     win_flag = False
-    win_check  = False
+    doCheck = True
 
     print("game start")
     while gamenow == True:
@@ -85,70 +129,18 @@ while running:
                         if key[1] == "LEFT":
                             cursor_change = key[2]
                             update_flag = True
+                            mc.setBlocks(5, 86, 0, 21, 86, 0, block.AIR)
                         elif key[1] == "RIGHT":
                             cursor_change = key[2]
                             update_flag = True
+                            mc.setBlocks(5, 86, 0, 21, 86, 0, block.AIR)
                         elif key[1] == "SPACE":
                             sta = cursor+(8-stonecount[cursor])*9
                             if stonecount[cursor] < 9:
                                 color[sta] = stonecolor #一次元配列
                                 # color[8-stonecount[cursor]][cursor] = stonecolor #二次元配列
                                 stonecount[cursor] += 1
-                                # 勝利判定文 print()はデバッグ用
-                                win_flag = True
-                                if stonecount[cursor] > 3 and win_flag == True and win_check == False: #下
-                                    for x in range(4):
-                                        if color[sta+x*9] != stonecolor:
-                                            win_flag = False
-                                    if win_flag == True:
-                                        win_check = True
-                                if cursor < 6 and win_flag == True and win_check == False: #右
-                                    for x in range (4):
-                                        if color[sta+x] != stonecolor:
-                                            win_flag = False
-                                    if win_flag == True:
-                                        win_check = True
-                                if cursor > 2 and win_flag == True and win_check == False: # 左
-                                    for x in range(4):
-                                        if color[sta-x] != stonecolor:
-                                            win_flag = False
-                                    if win_flag == True:
-                                        win_check = True
-                                if stonecount[cursor] < 7 and cursor < 6 and win_flag == True and win_check == False: #右上
-                                    print("judge rightup")
-                                    for x in range(4):
-                                        if color[sta-(x*9)+x] != stonecolor:
-                                            win_flag = False
-                                    if win_flag == True:
-                                        win_check = True
-                                if stonecount[cursor] > 3 and cursor < 6 and win_flag == True and win_check == False: #右下
-                                    print("judge rightdown")
-                                    for x in range(4):
-                                        if color[sta+(x*9)+x] != stonecolor:
-                                            win_flag = False
-                                    if win_flag == True:
-                                        win_check = True
-                                if stonecount[cursor] < 7 and cursor > 2 and win_flag == True and win_check == False: #左上
-                                    print("judge leftup")
-                                    for x in range(4):
-                                        if color[sta-(x*9)-x] != stonecolor:
-                                            win_flag = False
-                                    if win_flag == True:
-                                        win_check = True
-                                if stonecount[cursor] > 3 and cursor > 2 and win_flag == True and win_check == False: #左下
-                                    print("judge leftdown")
-                                    for x in range(4):
-                                        if color[sta+(x*9)-x] != stonecolor:
-                                             win_flag = False
-                                    if win_flag == True:
-                                        win_check = True
-                                
-                                ## print("stone drop")
-
-                                if whichturn == False:
-                                    whichturn = True
-                                else:
-                                    whichturn = False
+                                win_check()
                             update_flag = True
                         elif key[1] == "WIN":
                             print("game end debug")
@@ -174,7 +166,6 @@ while running:
             stonecolor = 1
         else:  
             stonecolor = 2
-    
 
         screen.fill(ground) # background color
 
@@ -190,7 +181,6 @@ while running:
         """
 
 
-    
         for x in range(81): #四角を描くコード 一次元配列版 正常に動作
             y = x//9
             if color[x] == 0:
@@ -211,8 +201,8 @@ while running:
                 mc.setBlock(x1, y1, 0, block.BLUE_CONCRETE)
 
      
-
         pygame.draw.rect(screen, CURSOR, Rect(48 + cursor * 32, 24 + 0 * 32, 24, 24))
+        mc.setBlock(5+2*cursor, 86, 0, block.GREEN_CONCRETE)
             
     
         text1, rect1 = font1.render(str(cursor), WHITE)
