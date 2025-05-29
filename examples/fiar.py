@@ -47,45 +47,53 @@ doCheck = True
 def win_check() :
     # 勝利判定文 print()はデバッグ用
     win_flag = True
-    doCheck = True
+    doCheck = False
     if stonecount[cursor] > 3: #下
+        doCheck = False
         for x in range(4):
             if color[sta + 9*x] != stonecolor:
                 win_flag = False
-        if win_flag:
-            doCheck = False
-    elif cursor < 6 and win_check == False: #右
+                doCheck = True
+    if cursor < 6 and doCheck == True: #右
+        doCheck = False
         for x in range (4):
             if color[sta + x] != stonecolor:
                 win_flag = False
-    elif cursor > 2 and win_check == False: # 左
+                doCheck = True
+    if cursor > 2 and doCheck == True: # 左
+        doCheck = False
         for x in range(4):
             if color[sta - x] != stonecolor:
                 win_flag = False
-    elif stonecount[cursor] < 7 and cursor < 6: #右上
+                doCheck = True
+    if stonecount[cursor] < 7 and cursor < 6 and doCheck == True: #右上
+        doCheck = False
         print("judge rightup")
         for x in range(4):
             if color[sta - 8*x] != stonecolor:
                 win_flag = False
-    elif stonecount[cursor] > 3 and cursor < 6: #右下
+                doCheck = True
+    if stonecount[cursor] > 3 and cursor < 6 and doCheck == True: #右下
+        doCheck = False
         print("judge rightdown")
         for x in range(4):
             if color[sta + 10*x] != stonecolor:
                 win_flag = False
-    elif stonecount[cursor] < 7 and cursor > 2: #左上
+                doCheck = True
+    if stonecount[cursor] < 7 and cursor > 2 and doCheck == True: #左上
+        doCheck = False
         print("judge leftup")
         for x in range(4):
             if color[sta - 10*x] != stonecolor:
                 win_flag = False
-    elif stonecount[cursor] > 3 and cursor > 2: #左下
+                doCheck = True
+    if stonecount[cursor] > 3 and cursor > 2 and doCheck == True: #左下
+        doCheck = False
         print("judge leftdown")
         for x in range(4):
             if color[sta + 8*x] != stonecolor:
                 win_flag = False
-    if whichturn == False:
-        whichturn = True
-    else:
-         whichturn = False
+                doCheck = True
 
 
 while running:
@@ -115,7 +123,7 @@ while running:
     stonecount = [0]*9
     gamenow = True
     win_flag = False
-    doCheck = True
+    doCheck = False
 
     print("game start")
     while gamenow == True:
@@ -141,6 +149,10 @@ while running:
                                 # color[8-stonecount[cursor]][cursor] = stonecolor #二次元配列
                                 stonecount[cursor] += 1
                                 win_check()
+                                if whichturn == False:
+                                    whichturn = True
+                                else:
+                                    whichturn = False
                             update_flag = True
                         elif key[1] == "WIN":
                             print("game end debug")
