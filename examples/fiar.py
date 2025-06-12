@@ -44,7 +44,7 @@ CTRL_KEYS = [[pygame.K_LEFT, "LEFT", -1],
 win_flag = False
 doCheck = True
 
-def win_check() :
+def win_check() : # 注：古いコード 後で振り返るために残す
     # 勝利判定文 print()はデバッグ用
     win_flag = True
     doCheck = True
@@ -99,8 +99,7 @@ def win_check() :
         if win_flag == True:
             doCheck = False
 
-def win_check2():
-    win_flag = False
+def win_check2(): #自作 判定が怪しい 長い
     wincount = 0
     for x in range(4):
         if sta + 9*x < 81: # 下
@@ -109,8 +108,7 @@ def win_check2():
             else:
                 break
     if wincount >= 4:
-        win_flag = True
-        print("win1")
+        return True
 
     wincount = 0
     for x in range(4):
@@ -125,8 +123,7 @@ def win_check2():
             else:
                 break
     if wincount >= 4:
-        win_flag = True
-        print("win2")
+        return True
 
     wincount = 0
     for x in range(4):
@@ -141,8 +138,7 @@ def win_check2():
             else:
                 break
     if wincount >= 4:
-        win_flag = True
-        print("win3")
+        return True
         
     wincount = 0
     for x in range(4):
@@ -157,8 +153,40 @@ def win_check2():
             else:
                 break
     if wincount >= 4:
-        win_flag = True
-        print("win4")
+        return True
+    return False
+
+
+BOARD_SIZE = 9
+N = 4
+
+def inBounds(x, y, board_size=BOARD_SIZE): #盤内チェック
+    if x < 0 or y < 0 or x >= board_size or y >= board_size:
+        return False
+    else:
+        True
+
+def checkWin(x, y, board, n=N):
+    directions = [(1, 0), (0, 1), (1, 1), (1, -1)]
+    playerValue = board[x][y]
+    for dx, dy in directions:
+        win_count = 1  # 中心の石
+        
+        # 正の方向
+        nx, ny = x + dx, y + dy
+        while inBounds(nx, ny) and board[nx][ny] == playerValue:
+            win_count += 1
+            nx += dx
+            ny += dy
+        # 負の方向
+        nx, ny = x - dx, y - dy
+        while inBounds(nx, ny) and  board[nx][ny] == playerValue:
+            win_count += 1
+            nx += dx
+            ny += dy
+        if win_count >= n:
+            return True
+    return False
 
 
 while running:
@@ -174,7 +202,7 @@ while running:
     whichturn = False
     # False = red, True = blue
 
-    # color = [[0]*9]*9 # 二次元配列
+    board = [[0]*9]*9 # 二次元配列
     color = [0]*81 # 一次元配列
     stonecolor = 1
     # 0 = nothing, 1 = red, 2 = blue
@@ -212,9 +240,16 @@ while running:
                             sta = cursor+(8-stonecount[cursor])*9
                             if stonecount[cursor] < 9:
                                 color[sta] = stonecolor #一次元配列
-                                # color[8-stonecount[cursor]][cursor] = stonecolor #二次元配列
+                                board[cursor][8-stonecount[cursor]] = stonecolor #二次元配列
                                 stonecount[cursor] += 1
-                                win_check2()
+                                if win_check2():
+                                    gamenow = False
+                                    time.sleep(2)
+                                '''
+                                if checkWin(cursor, 8-stonecount[cursor], board) :
+                                    gamenow = False
+                                    time.sleep(2)
+                                '''
                                 if whichturn == False:
                                     whichturn = True
                                 else:
@@ -280,9 +315,8 @@ while running:
             if whichturn == False:
                 gamenow =  False
                 time.sleep(2)
-            else:
-                gamenow = False
-                time.sleep(2)
+        
+                
 
 
         skip_frames += 1
