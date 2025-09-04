@@ -180,26 +180,46 @@ def checkWin(x, y, board, n=N):
             win_count += 1
             nx += dx
             ny += dy
+            print("plus " + str(win_count))
         # 負の方向
         nx, ny = x - dx, y - dy
         while inBounds(nx, ny) and board[nx][ny] == playerValue:
             win_count += 1
-            nx += dx
-            ny += dy
+            nx -= dx
+            ny -= dy
+            print("minus " + str(win_count))
         if win_count >= n:
             return True
     return False
 
+def mc_board(mx, my, size, turn):
+    size -= 1
+    if turn == False:
+        mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.RED_CONCRETE)
+    else:
+        mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.BLUE_CONCRETE)
+
+def mc_Cursor(mx, my, size):
+    size -= 1
+    mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.GREEN_CONCRETE)
+
+
+blank_space = 1
+stone_size = 1
+
+# マイクラ内の座標 始点
+mc_x = 5
+mc_y = 68
+mc_z = 0
+
+mc_xEnd = mc_x + 9*stone_size + 8*blank_space
+mc_yEnd = mc_y + 9*stone_size + 8*blank_space
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             gamenow = False
-    
-    mc.setBlocks(5, 68, 0, 21, 84, 0, block.AIR)
-    mc.setBlocks(5, 68, -1, 21, 84, -1, block.GRAY_CONCRETE)
-    mc.setBlocks(5, 86, 0, 21, 86, 0, block.AIR)
 
     whichturn = False
     # False = red, True = blue
@@ -213,13 +233,25 @@ while running:
     #初期位置
 
     cursor_change = 0
-    skip_frames = FPS *WAIT + 1
+    skip_frames = FPS * WAIT + 1
     update_flag = True
 
     stonecount = [0]*9
     gamenow = True
     win_flag = False
     doCheck = False
+
+    mc.setBlocks(mc_x, mc_y, 0, mc_xEnd, mc_yEnd, 0, block.AIR)
+    mc.setBlocks(mc_x, mc_y, -1, mc_xEnd, mc_yEnd, -1, block.GRAY_CONCRETE)
+    mc.setBlocks(mc_x, mc_yEnd + 2, 0, mc_xEnd, mc_yEnd + 2, 0, block.AIR)
+
+    for x in range(81): # ブロック設置
+            y1 = ((stone_size + blank_space) * (9 - (x//9))) + 66
+            x1 = 5 + ((x%9) * (stone_size + blank_space))
+            mc.setBlock(x1, y1, 0, block.WHITE_CONCRETE)
+
+    mc_Cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
+    
 
     print("game start")
     while gamenow == True:
@@ -232,20 +264,23 @@ while running:
                     if event.key == key[0]:
                         if key[1] == "LEFT":
                             cursor_change = key[2]
+                            mc.setBlocks(mc_x, mc_yEnd + 2, 0, mc_xEnd, mc_yEnd + 2, 0, block.AIR)
+                            mc_Cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
                             update_flag = True
-                            mc.setBlocks(5, 86, 0, 21, 86, 0, block.AIR)
                         elif key[1] == "RIGHT":
                             cursor_change = key[2]
+                            mc.setBlocks(mc_x, mc_yEnd + 2, 0, mc_xEnd, mc_yEnd + 2, 0, block.AIR)
+                            mc_Cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
                             update_flag = True
-                            mc.setBlocks(5, 86, 0, 21, 86, 0, block.AIR)
                         elif key[1] == "SPACE":
                             sta = cursor+(8-stonecount[cursor])*9
+                            stone_y = 8-stonecount[cursor]
                             if stonecount[cursor] < 9:
-                                color[sta] = stonecolor #一次元配列
-                                boardcolor[cursor][8-stonecount[cursor]] = stonecolor #二次元配列
-                                
-                                print(str(cursor) + ", " + str(8 - stonecount[cursor]))
-                                if checkWin(cursor, 8-stonecount[cursor], boardcolor) :
+                                #color[sta] = stonecolor #一次元配列
+                                boardcolor[cursor][stone_y] = stonecolor #二次元配列
+                                mc_board((stone_size + blank_space) * cursor + 5, (stone_size + blank_space) * (9-stone_y) + 66, stone_size, whichturn)
+                                #print(str(cursor) + ", " + str(8 - stonecount[cursor]))
+                                if checkWin(cursor, stone_y, boardcolor) :
                                     gamenow = False
                                     time.sleep(2)
                                 '''
@@ -318,6 +353,7 @@ while running:
                 elif boardcolor[x][y] == 2:
                     pygame.draw.rect(screen, BLUE, Rect(48 + x * 32, 70 + y * 32, 24, 24))
                 
+        '''
         for x in range(81): # ブロック設置
             y1 = (2*(9-(x//9)))+66
             x1 = 5+((x%9)*2)
@@ -327,10 +363,11 @@ while running:
                 mc.setBlock(x1, y1, 0, block.RED_CONCRETE)
             else:
                 mc.setBlock(x1, y1, 0, block.BLUE_CONCRETE)
+        '''
 
      
         pygame.draw.rect(screen, CURSOR, Rect(48 + cursor * 32, 24 + 0 * 32, 24, 24)) # カーソル設置
-        mc.setBlock(5+2*cursor, 86, 0, block.GREEN_CONCRETE)
+        # mc.setBlock(5+2*cursor, 86, 0, block.GREEN_CONCRETE)
             
     
         text1, rect1 = font1.render(str(cursor), WHITE)
