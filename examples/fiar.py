@@ -180,14 +180,12 @@ def checkWin(x, y, board, n=N):
             win_count += 1
             nx += dx
             ny += dy
-            print("plus " + str(win_count))
         # 負の方向
         nx, ny = x - dx, y - dy
         while inBounds(nx, ny) and board[nx][ny] == playerValue:
             win_count += 1
             nx -= dx
             ny -= dy
-            print("minus " + str(win_count))
         if win_count >= n:
             return True
     return False
@@ -199,21 +197,22 @@ def mc_board(mx, my, size, turn):
     else:
         mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.BLUE_CONCRETE)
 
-def mc_Cursor(mx, my, size):
+def mc_cursor(mx, my, size):
     size -= 1
+    mc.setBlocks(mc_x, mc_yEnd + 2, 0, mc_xEnd, mc_yEnd + 2 + size, 0, block.AIR)
     mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.GREEN_CONCRETE)
 
 
-blank_space = 1
-stone_size = 1
+blank_space = 2
+stone_size = 2
 
 # マイクラ内の座標 始点
 mc_x = 5
 mc_y = 68
 mc_z = 0
 
-mc_xEnd = mc_x + 9*stone_size + 8*blank_space
-mc_yEnd = mc_y + 9*stone_size + 8*blank_space
+mc_xEnd = mc_x + 9*stone_size + 8*blank_space -1
+mc_yEnd = mc_y + 9*stone_size + 8*blank_space -1
 
 while running:
     for event in pygame.event.get():
@@ -248,9 +247,9 @@ while running:
     for x in range(81): # ブロック設置
             y1 = ((stone_size + blank_space) * (9 - (x//9))) + 66
             x1 = 5 + ((x%9) * (stone_size + blank_space))
-            mc.setBlock(x1, y1, 0, block.WHITE_CONCRETE)
+            mc.setBlocks(x1, y1, 0, x1+stone_size-1, y1+stone_size-1, 0, block.WHITE_CONCRETE)
 
-    mc_Cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
+    mc_cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
     
 
     print("game start")
@@ -264,13 +263,9 @@ while running:
                     if event.key == key[0]:
                         if key[1] == "LEFT":
                             cursor_change = key[2]
-                            mc.setBlocks(mc_x, mc_yEnd + 2, 0, mc_xEnd, mc_yEnd + 2, 0, block.AIR)
-                            mc_Cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
                             update_flag = True
                         elif key[1] == "RIGHT":
                             cursor_change = key[2]
-                            mc.setBlocks(mc_x, mc_yEnd + 2, 0, mc_xEnd, mc_yEnd + 2, 0, block.AIR)
-                            mc_Cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
                             update_flag = True
                         elif key[1] == "SPACE":
                             sta = cursor+(8-stonecount[cursor])*9
@@ -294,7 +289,7 @@ while running:
                                 else:
                                     whichturn = False
                             update_flag = True
-                        elif key[1] == "WIN":
+                        elif key[1] == "WIN": #以下デバッグ用
                             print("game end debug")
                             gamenow = False
                         elif key[1] == "BOARD":
@@ -323,6 +318,7 @@ while running:
             skip_frames = 0
             if cursor + cursor_change >= 0 and cursor + cursor_change <= 8:
                 cursor += cursor_change
+                mc_cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
             cursor_change = 0
 
         if(whichturn == False):
