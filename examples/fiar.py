@@ -12,7 +12,6 @@ from param_mc_remote import block
 mc = Minecraft.create(address=param.ADRS_MCR, port=param.PORT_MCR)
 mc.setPlayer(param.PLAYER_NAME, PO.x, PO.y, PO.z)
 # mc.postToChat("Hello, Minecraft Server!! from yu184743")
-mc.setBlock(5, 68, 5, block.GOLD_BLOCK)
 
 
 pygame.init()
@@ -192,10 +191,18 @@ def checkWin(x, y, board, n=N):
 
 def mc_board(mx, my, size, turn):
     size -= 1
+    my -= adjustment_dif
     if turn == False:
         mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.RED_CONCRETE)
     else:
         mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.BLUE_CONCRETE)
+    print(str(mx) + " " + str(my))
+
+def board_startup(mx, my, size):
+    size -= 1
+    my -= adjustment_dif
+    mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.WHITE_CONCRETE)
+    print(str(mx) + " " + str(my), end=' ')
 
 def mc_cursor(mx, my, size):
     size -= 1
@@ -205,6 +212,7 @@ def mc_cursor(mx, my, size):
 
 blank_space = 2
 stone_size = 2
+adjustment_dif = blank_space + stone_size - 2
 
 # マイクラ内の座標 始点
 mc_x = 5
@@ -240,14 +248,26 @@ while running:
     win_flag = False
     doCheck = False
 
-    mc.setBlocks(mc_x, mc_y, 0, mc_xEnd, mc_yEnd, 0, block.AIR)
+    mc.setBlocks(0, 63, -1, 48, 127, 48, block.AIR)
     mc.setBlocks(mc_x, mc_y, -1, mc_xEnd, mc_yEnd, -1, block.GRAY_CONCRETE)
-    mc.setBlocks(mc_x, mc_yEnd + 2, 0, mc_xEnd, mc_yEnd + 2, 0, block.AIR)
 
+    '''
+    for y in range(9):
+        for x in range(9):
+            x1 = mc_x + (x * (stone_size + blank_space))
+            y1 = mc_y + (y * (stone_size + blank_space))
+            board_startup(x1, y1, stone_size + blank_space)
+    print("\n")
+
+    '''
     for x in range(81): # ブロック設置
-            y1 = ((stone_size + blank_space) * (9 - (x//9))) + 66
+            y1 = ((stone_size + blank_space) * (9 - (x//9))) + 66 - adjustment_dif
             x1 = 5 + ((x%9) * (stone_size + blank_space))
             mc.setBlocks(x1, y1, 0, x1+stone_size-1, y1+stone_size-1, 0, block.WHITE_CONCRETE)
+            print(str(x1) + "," + str(y1), end=' ')
+            if (x+1)%9 == 0:
+                print("\n")
+    
 
     mc_cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
     
@@ -349,17 +369,6 @@ while running:
                 elif boardcolor[x][y] == 2:
                     pygame.draw.rect(screen, BLUE, Rect(48 + x * 32, 70 + y * 32, 24, 24))
                 
-        '''
-        for x in range(81): # ブロック設置
-            y1 = (2*(9-(x//9)))+66
-            x1 = 5+((x%9)*2)
-            if color[x] == 0:
-                mc.setBlock(x1, y1, 0, block.WHITE_CONCRETE)
-            elif color[x] == 1:
-                mc.setBlock(x1, y1, 0, block.RED_CONCRETE)
-            else:
-                mc.setBlock(x1, y1, 0, block.BLUE_CONCRETE)
-        '''
 
      
         pygame.draw.rect(screen, CURSOR, Rect(48 + cursor * 32, 24 + 0 * 32, 24, 24)) # カーソル設置
