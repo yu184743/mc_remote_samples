@@ -30,14 +30,14 @@ mc.setPlayer(param.PLAYER_NAME, PO.x, PO.y, PO.z)
 # hintモードをオフにしたときに、hintのドットを消す必要がある。
 # hintモードをオフにしたときに、hintのドットを消す必要がある。
 
-
+'''
 block_colors = [block.RED_WOOL,
                 block.LIME_WOOL,  # green
                 block.BLUE_WOOL,
                 block.YELLOW_WOOL,
                 block.ORANGE_WOOL,
                 block.MAGENTA_WOOL]  # purple
-
+'''
 
 FPS = 30  # frames per second to update the screen
 WINDOWWIDTH = 640  # width of the program's window, in pixels
@@ -69,11 +69,11 @@ GRIDLINECOLOR = BLACK
 TEXTCOLOR = WHITE
 HINTCOLOR = BROWN
 
-WHITE_mc = param.WHITE_WOOL
-BLACK_mc = param.BLACK_WOOL
-HINTCOLOR_mc = param.BROWN_WOOL
-GREEN_mc = param.GREEN_WOOL
-CURSOR_mc = param.SEA_LANTERN_BLOCK
+WHITE_mc = block.WHITE_WOOL
+BLACK_mc = block.BLACK_WOOL
+HINTCOLOR_mc = block.BROWN_WOOL
+GREEN_mc = block.GREEN_WOOL
+CURSOR_mc = block.SEA_LANTERN
 
 X0_mc, Y0_mc, Z0_mc = 8, 136, -80
 wait = 0.01
@@ -464,12 +464,12 @@ DISC_PATTERN[4] = ((0, 0, 0, 0, 0, 0, 0, 0),
 
 
 def draw_board_mc():
-    # mc.setBlocks(X0_mc, Y0_mc, Z0_mc, X0_mc + 9 * 8, Y0_mc - 9 * 8, Z0_mc, param.AIR)
-    mc.setBlocks(X0_mc, Y0_mc, Z0_mc, X0_mc + 9 * 8, Y0_mc - 9 * 8, Z0_mc, param.GREEN_WOOL)
+    # mc.setBlocks(X0_mc, Y0_mc, Z0_mc, X0_mc + 9 * 8, Y0_mc - 9 * 8, Z0_mc, block.AIR)
+    mc.setBlocks(X0_mc, Y0_mc, Z0_mc, X0_mc + 9 * 8, Y0_mc - 9 * 8, Z0_mc, block.GREEN_WOOL)
     for _x in range(9):
-        mc.setBlocks(X0_mc + 9 * _x, Y0_mc, Z0_mc, X0_mc + 9 * _x, Y0_mc - 9 * 8, Z0_mc, param.BLACK_WOOL)
+        mc.setBlocks(X0_mc + 9 * _x, Y0_mc, Z0_mc, X0_mc + 9 * _x, Y0_mc - 9 * 8, Z0_mc, block.BLACK_WOOL)
     for _y in range(9):
-        mc.setBlocks(X0_mc, Y0_mc - 9 * _y, Z0_mc, X0_mc + 9 * 8, Y0_mc - 9 * _y, Z0_mc, param.BLACK_WOOL)
+        mc.setBlocks(X0_mc, Y0_mc - 9 * _y, Z0_mc, X0_mc + 9 * 8, Y0_mc - 9 * _y, Z0_mc, block.BLACK_WOOL)
 
 
 def put_hint_mc(x, y):
