@@ -190,27 +190,34 @@ def checkWin(x, y, board, n=N):
     return False
 
 def mc_board(mx, my, size, turn):
+    mx += blank_space
+    my += blank_space
     size -= 1
     my -= adjustment_dif
     if turn == False:
         mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.RED_CONCRETE)
     else:
         mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.BLUE_CONCRETE)
-    print(str(mx) + " " + str(my))
+    #print(str(mx) + " " + str(my))
 
 def board_startup(mx, my, size):
+    mx += blank_space
+    my += blank_space
     size -= 1
     my -= adjustment_dif
     mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.WHITE_CONCRETE)
-    print(str(mx) + " " + str(my), end=' ')
+    # mc.setBlocks(mx, my, 0, mx+size + (blank_space * 2), my+size + (blank_space * 2), 0, block.WHITE_CONCRETE)
+    #print(str(mx) + " " + str(my), end=' ')
 
 def mc_cursor(mx, my, size):
+    mx += blank_space
+    my += blank_space * 2
     size -= 1
-    mc.setBlocks(mc_x, mc_yEnd + 2, 0, mc_xEnd, mc_yEnd + 2 + size, 0, block.AIR)
+    mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.AIR) #要修正
     mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.GREEN_CONCRETE)
 
 
-blank_space = 2
+blank_space = 1
 stone_size = 2
 adjustment_dif = blank_space + stone_size - 2
 
@@ -249,7 +256,7 @@ while running:
     doCheck = False
 
     mc.setBlocks(0, 63, -1, 48, 127, 48, block.AIR)
-    mc.setBlocks(mc_x, mc_y, -1, mc_xEnd, mc_yEnd, -1, block.GRAY_CONCRETE)
+    mc.setBlocks(mc_x, mc_y, 0, mc_xEnd + (blank_space*2), mc_yEnd + (blank_space*2), 0, block.GRAY_CONCRETE)
 
     '''
     for y in range(9):
@@ -260,13 +267,15 @@ while running:
     print("\n")
 
     '''
+    # ↓必ず関数に置き換える!!!!!!
     for x in range(81): # ブロック設置
             y1 = ((stone_size + blank_space) * (9 - (x//9))) + 66 - adjustment_dif
             x1 = 5 + ((x%9) * (stone_size + blank_space))
-            mc.setBlocks(x1, y1, 0, x1+stone_size-1, y1+stone_size-1, 0, block.WHITE_CONCRETE)
-            print(str(x1) + "," + str(y1), end=' ')
-            if (x+1)%9 == 0:
-                print("\n")
+            # mc.setBlocks(x1, y1, 0, x1+stone_size-1, y1+stone_size-1, 0, block.WHITE_CONCRETE)
+            board_startup(x1,y1+1,stone_size)
+            # print(str(x1) + "," + str(y1), end=' ')
+            # if (x+1)%9 == 0:
+            #     print("\n")
     
 
     mc_cursor((stone_size + blank_space) * cursor + 5, mc_yEnd + 2, stone_size)
