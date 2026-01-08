@@ -213,7 +213,7 @@ def mc_cursor(mx, my, size):
     mx += blank_space
     my += blank_space * 2
     size -= 1
-    mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.AIR) #要修正
+    mc.setBlocks(mc_x, mc_yEnd+3, 0, mc_xEnd+2, mc_yEnd+size+4, 0, block.AIR) #要修正
     mc.setBlocks(mx, my, 0, mx+size, my+size, 0, block.GREEN_CONCRETE)
 
 
