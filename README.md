@@ -1,3 +1,11 @@
+このリポジトリはNaohiro2g氏のものをフォークしています。
+examplesの中にある、connect_four.pyが私が作った重力付き四目並べ(コネクトフォー)です。
+
+pygameを用いて四目並べを製作し、キーボード操作でディスクを落とします。
+ゲーム中は、param_mc_remoteファイルで指定したマインクラフトのサーバーにブロックが設置され、マインクラフトのワールド内で盤面が再現されます。
+
+
+
 # minecraft_remote_samples / Naohiro2g
 
 Starting point for writing Minecraft Remote user code in Python with its API
