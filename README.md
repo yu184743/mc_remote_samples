@@ -6,6 +6,12 @@ pygameを用いて四目並べを製作し、キーボード操作でディス�
 
 
 
+https://github.com/user-attachments/assets/d6202c0a-21a0-4f1d-9f4a-4647d999793b
+
+
+
+
+
 # minecraft_remote_samples / Naohiro2g
 
 Starting point for writing Minecraft Remote user code in Python with its API
