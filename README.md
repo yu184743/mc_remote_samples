@@ -11,7 +11,9 @@ pygameを用いて四目並べを製作し、キーボード操作でディス�
 <img width="638" height="506" alt="スクリーンショット 2026-09-10 210331" src="https://github.com/user-attachments/assets/e31dc2f4-7c3e-48b2-bc50-cfd5db4b662a" />
 </a>
 
+<a href="https://drive.google.com/file/d/1je06xiwtdlnVo_LBwJ0zWKZpn80OZqU4/view?usp=drive_link">
 <img width="1498" height="511" alt="スクリーンショット 2026-09-10 210453" src="https://github.com/user-attachments/assets/c59c256c-8bdb-4a9e-a945-36b46d940764" />
+</a>
 
 # minecraft_remote_samples / Naohiro2g
 
