@@ -7,12 +7,14 @@ pygameを用いて四目並べを製作し、キーボード操作でディス�
 ゲーム中は、param_mc_remoteファイルで指定したマインクラフトのサーバーにブロックが設置され、マインクラフトのワールド内で盤面が再現されます。
 
 
-下の画像をクリックすると、実際に動かしているようすを録画した動画に飛びます。pygame側で動いている四目並べを録画したものと、マインクラフト側で盤面が再現されているのもセットで録画したものの2つがあります。
+### 下の画像をクリックすると、実際に動かしているようすを録画した動画に飛びます。
 
+pygame側で動いている四目並べを録画したものです。
 <a href="https://drive.google.com/file/d/1R9-OtPY2zaOua-3rbDYrWk5pMG44VtqF/view?usp=drive_link">
 <img width="638" height="506" alt="スクリーンショット 2026-09-10 210331" src="https://github.com/user-attachments/assets/e31dc2f4-7c3e-48b2-bc50-cfd5db4b662a" />
 </a>
 
+マインクラフト側で盤面が再現されているのもセットで録画したものです。
 <a href="https://drive.google.com/file/d/1je06xiwtdlnVo_LBwJ0zWKZpn80OZqU4/view?usp=drive_link">
 <img width="1498" height="511" alt="スクリーンショット 2026-09-10 210453" src="https://github.com/user-attachments/assets/c59c256c-8bdb-4a9e-a945-36b46d940764" />
 </a>
