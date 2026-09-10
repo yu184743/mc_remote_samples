@@ -7,7 +7,7 @@ pygameを用いて四目並べを製作し、キーボード操作でディス�
 ゲーム中は、param_mc_remoteファイルで指定したマインクラフトのサーバーにブロックが設置され、マインクラフトのワールド内で盤面が再現されます。
 
 
-<a hreh="https://drive.google.com/file/d/1R9-OtPY2zaOua-3rbDYrWk5pMG44VtqF/view?usp=drive_link">
+<a href="https://drive.google.com/file/d/1R9-OtPY2zaOua-3rbDYrWk5pMG44VtqF/view?usp=drive_link">
 <img width="638" height="506" alt="スクリーンショット 2026-09-10 210331" src="https://github.com/user-attachments/assets/e31dc2f4-7c3e-48b2-bc50-cfd5db4b662a" />
 </a>
 
