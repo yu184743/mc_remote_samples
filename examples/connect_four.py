@@ -18,7 +18,7 @@ pygame.init()
 
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode([640, 480])
-pygame.display.set_caption("pygame FourInARow")
+pygame.display.set_caption("pygame connect_four")
 
 font1 = pygame.freetype.Font("fonts/natumemozi.ttf", 48)
 
